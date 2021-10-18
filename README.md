@@ -16,7 +16,7 @@ Altere o arquivo README explicando o que é preciso para rodar sua aplicação. 
 
 - Os locais que estiverem '???' estão aguardando você completar o comando para o sucesso do mesmo.
 
-- Para as evidencias, salvar no arqivo **evidencias.doc** (na raiz), ou semelhante, e colocar o número da atividade e os prints e informações necessárias, enviando todas em um unico arquivo.
+- Para as evidências, salvar no arquivo **evidencias.doc** (na raiz), ou semelhante, e colocar o número da atividade e os prints e informações necessárias, enviando todas em um único arquivo.
 
 ## O que será analisado
 
@@ -37,7 +37,7 @@ Contém apenas 3 tabelas, clientes, vendas e vendas_itens. Ele nos solicitou alg
 
 Api para consultar dados dos clientes com suas vendas, exportando para excel e pdf e caso necessário atualizar.
 
-E um cadastro web para para criar novos clientes.
+E um cadastro web para criar novos clientes.
 
 Vamos separar isto em **Atividades**.
 
