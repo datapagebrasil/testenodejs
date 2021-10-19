@@ -68,8 +68,8 @@ Vamos separar isto em **Atividades**.
 
 # Parabéns
 
-Obrigado, por participar do nosso processo seletivo.
-Favor em contato com o responsável pelo processo seletivo
+Obrigado por participar do nosso processo seletivo.
+Favor entrar em contato com o responsável pelo processo seletivo
 
 Equipe Datapage
 
