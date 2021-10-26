@@ -69,10 +69,10 @@ Vamos separar isto em **Atividades**.
 # Parabéns
 
 Obrigado por participar do nosso processo seletivo.
-Favor entrar em contato com o responsável pelo processo seletivo
+Favor entrar em contato com o responsável pelo processo seletivo.
 
 Equipe Datapage
 
 ## Entrega
 
-Para iniciar o teste, faça o clone, depois crie uma branch com o seu nome completo e depois envie-nos o pull request.
+Para iniciar o teste, faça o clone, depois crie uma branch com o seu nome completo e depois envie-nos o pull request. Caso não seja possível, suba o projeto em seu próprio github e nos envie o link.
