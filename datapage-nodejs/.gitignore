@@ -34,7 +34,7 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-datapage-nodejs/arquivo.xlsx
+arquivo.xlsx
 
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,dotenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,node,dotenv

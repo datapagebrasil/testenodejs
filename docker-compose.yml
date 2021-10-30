@@ -8,7 +8,8 @@ services:
     container_name: teste-mysql
     image: mysql:5.7
     ports:
-      - "3306:3306"
+      - '3306:3306'
+    restart: always
     volumes:
       - ./teste-inicio.sql:/docker-entrypoint-initdb.d/inicio.sql
     environment:
@@ -16,3 +17,38 @@ services:
       - MYSQL_DATABASE=teste-app
       - MYSQL_USER=user-app
       - MYSQL_PASSWORD=senha-teste-app
+
+  sqlpad:
+    image: sqlpad/sqlpad:6
+    hostname: 'sqlpad'
+    ports:
+      - '3000:3000'
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      SQLPAD_ADMIN: 'admin@sqlpad.com'
+      SQLPAD_ADMIN_PASSWORD: 'admin'
+      SQLPAD_CONNECTIONS__sqlserverdemo__name: SQL Server Demo
+      SQLPAD_CONNECTIONS__sqlserverdemo__driver: mysql
+      SQLPAD_CONNECTIONS__sqlserverdemo__host: mysql
+      SQLPAD_CONNECTIONS__sqlserverdemo__database: teste-app
+      SQLPAD_CONNECTIONS__sqlserverdemo__username: user-app
+      SQLPAD_CONNECTIONS__sqlserverdemo__password: senha-teste-app
+    volumes:
+      - sqlpad-volume:/var/lib/sqlpad
+
+  nestjs:
+    container_name: nestjs
+    build: "./datapage-nodejs"
+    command: npm run start:dev
+    ports:
+      - 3030:3030
+    depends_on:
+      - mysql
+    volumes:
+      - ./datapage-nodejs:/usr/src/app
+      - /usr/src/app/node_modules
+
+volumes:
+  sqlpad-volume:

@@ -1,78 +1,26 @@
 # Teste datapage Node JS
 
-Olá caro desenvolvedor, nesse teste analisaremos seu conhecimento geral e inclusive velocidade de desenvolvimento. Abaixo explicaremos tudo o que será necessário.
+Segue abaixo os passos para a execução do projeto. Os prints das telas com a execução das atividades estão no arquivo `evidencias.docx`.
 
 ## Instruções
 
-Você deve desenvolver uma API e uma parte FrontEnd, utilizando Node.JS.
+- Dentro de `datapage-nodejs` crie uma cópia do arquivo `.env.example` com o nome `.env`. Não precisa modificar os valores que já estão no arquivo exemplo:
 
-A escolha das bibliotecas, banco de dados, arquitetura, etc, fica a seu critério.
+```
+# APPLICATION
+NODE_ENV=development
+PORT=3030
 
-O código precisa rodar em macOS ou Ubuntu (preferencialmente como container Docker).
+# MYSQL DB
+MYSQL_HOST=mysql
+MYSQL_PORT=3306
+MYSQL_USER=user-app
+MYSQL_PASSWORD=senha-teste-app
+MYSQL_DATABASE=teste-app
+```
 
-Altere o arquivo README explicando o que é preciso para rodar sua aplicação. (No final)
+Na raiz do projeto, execute o comando `docker-compose up -d --build` para criar os conteiners necessários para a execução do projeto.
+  - O serviço `sqlpad` foi adicionado para auxiliar nas consultas ao banco de dados (se trata de uma ferramenta visual como o MySQL Workbench). Ele pode ser acessado com `http://localhost:3000/signin`, utilizando *admin@sqlpad.com* e *admin* como usuário e senha, respectivamente.
+  - A API desenvolvida em NestJS pode ser acessada através da url `http://localhost:3030` e também é possível visualizar as rotas presentes na API acessando a documentação, em `http://localhost:3030/docs/`.
 
-## Padrão
-
-- Os locais que estiverem '???' estão aguardando você completar o comando para o sucesso do mesmo.
-
-- Para as evidências, salvar no arquivo **evidencias.doc** (na raiz), ou semelhante, e colocar o número da atividade e os prints e informações necessárias, enviando todas em um único arquivo.
-
-## O que será analisado
-
-- As evidências (prints) quando atividade não gerar código e o próprio código.
-
-- Reutilização / duplicação de código / Padrão SNORT .
-
-- A qualidade e organização do código.
-
-- O tempo entre o inicio da atividade e o envio para o git.
-
-- Quantidade de acertos - Quantidade de bugs.
-
-## Cenário
-
-Nosso cliente tem um sistema de vendas muito básico.
-Contém apenas 3 tabelas, clientes, vendas e vendas_itens. Ele nos solicitou algumas apis e um cadastro de cliente via browser.
-
-Api para consultar dados dos clientes com suas vendas, exportando para excel e pdf e caso necessário atualizar.
-
-E um cadastro web para criar novos clientes.
-
-Vamos separar isto em **Atividades**.
-
-## Instalação
-
-- Baixar este repositório via git clone
-
-`git clone ???`
-
-- Após o clone, entrar na pasta e ligar o docker-compose
-
-`docker-compose up`
-
-## Atividades
-
-- Não é necessário retornar o json exatamente como sugerido nos exemplos esta é apenas uma sugestão para organização / padrão.
-
-- [Atividade 1](/atividades/atividade1.md)
-- [Atividade 2](/atividades/atividade2.md)
-- [Atividade 3](/atividades/atividade3.md)
-- [Atividade 4](/atividades/atividade4.md)
-- [Atividade 5](/atividades/atividade5.md)
-- [Atividade 6](/atividades/atividade6.md)
-- [Atividade 7](/atividades/atividade7.md)
-- [Atividade 8](/atividades/atividade8.md)
-- [Atividade 9](/atividades/atividade9.md)
-- [Atividade 10](/atividades/atividade10.md)
-
-# Parabéns
-
-Obrigado por participar do nosso processo seletivo.
-Favor entrar em contato com o responsável pelo processo seletivo.
-
-Equipe Datapage
-
-## Entrega
-
-Para iniciar o teste, faça o clone, depois crie uma branch com o seu nome completo e depois envie-nos o pull request. Caso não seja possível, suba o projeto em seu próprio github e nos envie o link.
+**OBS**: O projeto foi finalizado por completo, cumprindo apenas até a Atividade 6.
