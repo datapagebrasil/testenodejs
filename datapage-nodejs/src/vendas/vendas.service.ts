@@ -7,12 +7,14 @@ import Venda from './entities/venda.entity';
 
 @Injectable()
 export class VendasService {
-  constructor(@InjectRepository(Venda) private vendasRepository: Repository<Venda>) { }
-  
-  public async create(createVendaDto: CreateVendaDto) {
-    const newSelling = this.vendasRepository.create(createVendaDto);
-    await this.vendasRepository.save(newSelling);
-    return newSelling;
+  constructor(
+    @InjectRepository(Venda) private vendasRepository: Repository<Venda>,
+  ) {}
+
+  public async create(createVendaDto: CreateVendaDto): Promise<Venda> {
+    const nodaVenda = this.vendasRepository.create(createVendaDto);
+    await this.vendasRepository.save(nodaVenda);
+    return nodaVenda;
   }
 
   public findAll(): Promise<Venda[]> {
@@ -20,20 +22,24 @@ export class VendasService {
   }
 
   public async findOne(id: number): Promise<Venda> {
-    const selling = await this.vendasRepository.findOne(id);
-    if (!selling) throw new NotFoundException('Venda não encontrada');
-    return selling;
+    const venda = await this.vendasRepository.findOne(id);
+    if (!venda) throw new NotFoundException('Venda não encontrada');
+    return venda;
   }
 
-  public async update(id: number, updateVendaDto: UpdateVendaDto) {
+  public async update(
+    id: number,
+    updateVendaDto: UpdateVendaDto,
+  ): Promise<Venda> {
     await this.vendasRepository.update(id, updateVendaDto);
-    const updatedSelling = await this.vendasRepository.findOne(id);
-    if (!updatedSelling) throw new NotFoundException('Venda não encontrada');
-    return updatedSelling;
+    const vendaAtualizada = await this.vendasRepository.findOne(id);
+    if (!vendaAtualizada) throw new NotFoundException('Venda não encontrada');
+    return vendaAtualizada;
   }
 
-  public async remove(id: number) {
-    const deleteSelling = await this.vendasRepository.delete(id);
-    if (!deleteSelling.affected) throw new NotFoundException('Venda não encontrada');
+  public async remove(id: number): Promise<void> {
+    const vendaRemovida = await this.vendasRepository.delete(id);
+    if (!vendaRemovida.affected)
+      throw new NotFoundException('Venda não encontrada');
   }
 }

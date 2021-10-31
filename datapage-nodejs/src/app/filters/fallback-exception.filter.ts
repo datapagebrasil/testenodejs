@@ -9,7 +9,7 @@ export class FallbackExceptionFilter implements ExceptionFilter {
     return response.status(500).json({
       erro: 1,
       mensagem: exception.message ?? 'Erro inesperado.',
-      dados: null
+      dados: null,
     });
   }
 }

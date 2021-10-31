@@ -10,38 +10,38 @@ import { ValidationException } from './app/filters/validation.exception';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // loading .env file
+  // carregando arquivo .env
   const configService = app.get(ConfigService);
-  // setting up swagger
+  // configurando swagger para documentacao
   const configDocs = new DocumentBuilder()
-      .setTitle('DataPage NodeJS API')
-      .setDescription('Documentação da API')
-      .setVersion('1.0')
-      .build();
+    .setTitle('DataPage NodeJS API')
+    .setDescription('Documentação da API')
+    .setVersion('1.0')
+    .build();
   const document = SwaggerModule.createDocument(app, configDocs);
   SwaggerModule.setup('docs', app, document);
-  // initializing app
-  const port = configService.get<number>('PORT');
-  console.log(port);
-  // setting up exception filters
+  // configurando de excecoes
   app.useGlobalFilters(
     new FallbackExceptionFilter(),
     new HttpExceptionFilter(),
-    new ValidationFilter()
+    new ValidationFilter(),
   );
-  // setting up validation
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,
-    exceptionFactory: (errors: ValidationError[]) => {
-      const messages = errors.map((error) => {
-        return {
-          mensagem: Object.values(error.constraints).join('')
-        };
-      });
-      return new ValidationException(messages);
-    }
-  }));
-
+  // configurando validacao
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      exceptionFactory: (errors: ValidationError[]) => {
+        const messages = errors.map((error) => {
+          return {
+            mensagem: Object.values(error.constraints).join(''),
+          };
+        });
+        return new ValidationException(messages);
+      },
+    }),
+  );
+  // inicializacao do app
+  const port = configService.get<number>('PORT');
   await app.listen(port, () => {
     Logger.log('Listening at http://localhost:' + port);
     Logger.log(`Running in ${configService.get('environment')} mode`);

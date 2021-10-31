@@ -14,7 +14,6 @@ export class ValidCPFRule implements ValidatorConstraintInterface {
   }
 
   defaultMessage(args: ValidationArguments) {
-    // default error message if validation failed
     return `CPF ($value) inválido.`;
   }
 }

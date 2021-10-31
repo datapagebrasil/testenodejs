@@ -8,7 +8,7 @@ export class ValidationFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const status = exception.getStatus();
-    
+
     return response.status(status).json({
       erro: 1,
       mensagem: exception.validationErrors[0].mensagem ?? exception.message,

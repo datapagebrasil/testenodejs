@@ -14,7 +14,7 @@ import { ItensModule } from 'src/itens/itens.module';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
-      validationSchema: validationSchema
+      validationSchema: validationSchema,
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
@@ -26,11 +26,11 @@ import { ItensModule } from 'src/itens/itens.module';
         password: configService.get<string>('mysql.password'),
         database: configService.get<string>('mysql.database'),
         autoLoadEntities: true,
-      })
+      }),
     }),
     ClientesModule,
     VendasModule,
-    ItensModule
+    ItensModule,
   ],
   controllers: [AppController],
   providers: [AppService],

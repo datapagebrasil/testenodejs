@@ -9,11 +9,17 @@ export class AppService {
   }
 
   downloadFile(fileName: string): ReadStream {
-    const ext = fileName.substring( fileName.lastIndexOf('.') + 1);
+    const ext = fileName.substring(fileName.lastIndexOf('.') + 1);
     if (!['xlsx', 'pdf'].includes(ext)) {
       throw new NotFoundException('Arquivo solicitado não existe');
     }
-    const filePath = path.join(__dirname, '..', 'resources', 'arquivos', fileName);
+    const filePath = path.join(
+      __dirname,
+      '..',
+      'resources',
+      'arquivos',
+      fileName,
+    );
     const file = createReadStream(filePath);
     return file;
   }
