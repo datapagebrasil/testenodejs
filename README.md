@@ -17,10 +17,17 @@ MYSQL_PORT=3306
 MYSQL_USER=user-app
 MYSQL_PASSWORD=senha-teste-app
 MYSQL_DATABASE=teste-app
+MYSQL_ROOT_PASSWORD=root
+
+#SQLPad
+SQLPAD_PORT=3000
+SQLPAD_ADMIN='admin@sqlpad.com'
+SQLPAD_ADMIN_PASSWORD='admin'
+SQLPAD_HOST=mysql
 ```
 
-Na raiz do projeto, execute o comando `docker-compose up -d --build` para criar os conteiners necessários para a execução do projeto.
+Na raiz do projeto, execute o comando `docker-compose --env-file datapage-nodejs/.env up -d --build` para criar os conteiners necessários para a execução do projeto.
   - O serviço `sqlpad` foi adicionado para auxiliar nas consultas ao banco de dados (se trata de uma ferramenta visual como o MySQL Workbench). Ele pode ser acessado com `http://localhost:3000/signin`, utilizando *admin@sqlpad.com* e *admin* como usuário e senha, respectivamente.
   - A API desenvolvida em NestJS pode ser acessada através da url `http://localhost:3030` e também é possível visualizar as rotas presentes na API acessando a documentação, em `http://localhost:3030/docs/`.
 
-**OBS**: O projeto foi finalizado por completo, cumprindo apenas até a Atividade 6.
+**OBS**: O projeto não foi finalizado por completo, cumprindo apenas até a Atividade 6.

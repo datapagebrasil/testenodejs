@@ -9,32 +9,31 @@ import Venda from './entities/venda.entity';
 export class VendasService {
   constructor(@InjectRepository(Venda) private vendasRepository: Repository<Venda>) { }
   
-  async create(createVendaDto: CreateVendaDto) {
+  public async create(createVendaDto: CreateVendaDto) {
     const newSelling = this.vendasRepository.create(createVendaDto);
     await this.vendasRepository.save(newSelling);
     return newSelling;
   }
 
-  findAll(): Promise<Venda[]> {
+  public findAll(): Promise<Venda[]> {
     return this.vendasRepository.find();
   }
 
-  async findOne(id: number): Promise<Venda> {
+  public async findOne(id: number): Promise<Venda> {
     const selling = await this.vendasRepository.findOne(id);
     if (!selling) throw new NotFoundException('Venda não encontrada');
     return selling;
   }
 
-  async update(id: number, updateVendaDto: UpdateVendaDto) {
+  public async update(id: number, updateVendaDto: UpdateVendaDto) {
     await this.vendasRepository.update(id, updateVendaDto);
     const updatedSelling = await this.vendasRepository.findOne(id);
     if (!updatedSelling) throw new NotFoundException('Venda não encontrada');
     return updatedSelling;
   }
 
-  async remove(id: number) {
+  public async remove(id: number) {
     const deleteSelling = await this.vendasRepository.delete(id);
-    // 'affected' checks the count of removed elements
     if (!deleteSelling.affected) throw new NotFoundException('Venda não encontrada');
   }
 }

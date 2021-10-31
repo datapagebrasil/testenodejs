@@ -1,42 +1,45 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { QueryFormatoDto } from './dto/query-formato.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import Cliente from './entities/cliente.entity';
-import * as fastcsv from 'fast-csv';
 import * as fs from 'fs';
-import * as path from 'path';
+import * as xlsx from 'xlsx';
+import { ItensService } from 'src/itens/itens.service';
 
 @Injectable()
 export class ClientesService {
-  constructor(@InjectRepository(Cliente) private clientesRepository: Repository<Cliente>){}
+  constructor(
+    @InjectRepository(Cliente) private clientesRepository: Repository<Cliente>,
+    private readonly itensService: ItensService) { }
 
-  async create(createClienteDto: CreateClienteDto) {
+  public async create(createClienteDto: CreateClienteDto) {
     const newClient = this.clientesRepository.create(createClienteDto);
     await this.clientesRepository.save(newClient);
     return newClient;
   }
 
-  findAll(): Promise<Cliente[]> {
+  public findAll(): Promise<Cliente[]> {
     return this.clientesRepository.find();
   }
 
-  async findOne(id: number): Promise<Cliente> {
+  public async findOne(id: number): Promise<Cliente> {
     const client = await this.clientesRepository.findOne(id);
     if (!client) throw new NotFoundException('Cliente não encontrado');
     return client;
   }
 
-  async findAllSellingsByClientId(id: number, query: QueryFormatoDto): Promise<any> {
-    const cliente = await this.clientesRepository
+  public async findAllSellingsByClientId(id: number, query: QueryFormatoDto): Promise<any> {
+    const resQuery = await this.clientesRepository
       .createQueryBuilder('cliente')
       .leftJoinAndSelect('cliente.vendas', 'vendas')
       .leftJoinAndSelect('vendas.itens', 'itens')
       .select([
         'cliente.nome',
         'cliente.telefone',
+        'vendas.id as venda_id',
         'vendas.data_cadastro as data_compra',
         'vendas.codigo_nota_fiscal as codigo_nota_fiscal',
         'sum(itens.valor) as valor_total'
@@ -44,31 +47,53 @@ export class ClientesService {
       .where("cliente.id = :id", { id })
       .groupBy('vendas.id')
       .getRawMany();
-    if (!cliente) throw new NotFoundException('Cliente não encontrado');
 
-    if (query.formato) {
-      const doc = fs.createWriteStream('arquivo.xlsx');
-      fastcsv.write(cliente, { headers: true })
-        .on("finish", function () {
-          Logger.log('Informações escritas no CSV');
-        }).pipe(doc);
-      
-      return { resultado: "/arquivos/arquivo.xlsx", mensagem: "Ok excel gerado" }
+    if (!resQuery || !resQuery.length) {
+      throw new NotFoundException('Cliente não encontrado');
     }
+    // criacao do arquivo .xlsx
+    if (query.formato) return await this.writeJsonToExcel(resQuery);
+    // recuperando itens para cada venda do cliente
+    for (var cliente of resQuery) {
+      cliente['itens'] = await this.itensService.findItemsPerSelling(cliente.venda_id);
+    }
+    // removendo campo 'venda_id'
+    const resultado = resQuery.map(({venda_id, ...data}) => data);
     
-    return {resultado: cliente, mensagem: "Vendas carregadas do cliente"};
+    return { resultado, mensagem: "Vendas carregadas do cliente"};
   }
 
-  async update(id: number, updateClienteDto: UpdateClienteDto) {
+  public async update(id: number, updateClienteDto: UpdateClienteDto) {
     await this.clientesRepository.update(id, updateClienteDto);
     const updatedClient = await this.clientesRepository.findOne(id);
     if (!updatedClient) throw new NotFoundException('Cliente não encontrado');
     return updatedClient;
   }
 
-  async remove(id: number) {
+  public async remove(id: number) {
     const deleteClient = await this.clientesRepository.delete(id);
-    // 'affected' checks the count of removed elements
     if (!deleteClient.affected) throw new NotFoundException('Cliente não encontrado');
+  }
+
+  private async writeJsonToExcel(data: any) {
+    const fileName = 'arquivo.xlsx';
+    const folderName = 'arquivos';
+    const filePath = `/${folderName}/${fileName}`;
+    await fs.promises.mkdir(`src/resources/${folderName}`, { recursive: true })
+
+    const reshapedData = data.map(({cliente_telefone, ...row}) => ({
+      "Cliente Nome": row["cliente_nome"],
+      "Data Venda": row["data_compra"],
+      "Codigo Nota Fiscal": row["codigo_nota_fiscal"],
+      "Valor Total": row["valor_total"],
+    }));
+
+    const workbook = xlsx.utils.book_new();
+    const worksheet = xlsx.utils.json_to_sheet(reshapedData);
+    worksheet['!cols'] = [{ width: 20 }, { width: 20 }, { width: 20 }, { width: 20 }];
+    xlsx.utils.book_append_sheet(workbook, worksheet, "vendas");
+    xlsx.writeFile(workbook, `src/resources${filePath}`);
+    
+    return { resultado: filePath, mensagem: "Ok excel gerado" }
   }
 }
