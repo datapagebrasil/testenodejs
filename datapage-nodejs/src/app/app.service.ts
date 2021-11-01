@@ -8,17 +8,13 @@ export class AppService {
     return 'Teste NodeJS';
   }
 
-  downloadFile(fileName: string): ReadStream {
-    const ext = fileName.substring(fileName.lastIndexOf('.') + 1);
-    if (!['xlsx', 'pdf'].includes(ext)) {
-      throw new NotFoundException('Arquivo solicitado não existe');
-    }
+  downloadFile(): ReadStream {
     const filePath = path.join(
       __dirname,
       '..',
       'resources',
       'arquivos',
-      fileName,
+      'arquivo.xlsx',
     );
     const file = createReadStream(filePath);
     return file;

@@ -18,17 +18,14 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('arquivos/:file')
+  @Get('arquivos/arquivo.xlsx')
   getExcelFile(
-    @Param('file') fileName: string,
     @Response({ passthrough: true }) res,
   ): StreamableFile {
-    const excel = this.appService.downloadFile(fileName);
+    const excel = this.appService.downloadFile();
     res.set({
-      'Content-Type': fileName.endsWith('.xlsx')
-        ? 'application/vnd.ms-excel'
-        : 'application/pdf',
-      'Content-Disposition': `attachment; filename="${fileName}"`,
+      'Content-Type': 'application/vnd.ms-excel',
+      'Content-Disposition': `attachment; filename="arquivo.xlsx"`,
     });
     return new StreamableFile(excel);
   }

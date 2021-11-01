@@ -8,6 +8,7 @@ import Cliente from './entities/cliente.entity';
 import * as fs from 'fs';
 import * as xlsx from 'xlsx';
 import { ItensService } from 'src/itens/itens.service';
+import * as path from 'path';
 
 @Injectable()
 export class ClientesService {
@@ -90,8 +91,18 @@ export class ClientesService {
   private async writeJsonToExcel(data: any): Promise<any> {
     const fileName = 'arquivo.xlsx';
     const folderName = 'arquivos';
-    const filePath = `/${folderName}/${fileName}`;
-    await fs.promises.mkdir(`src/resources/${folderName}`, { recursive: true });
+    const folderPath = path.join(
+      __dirname,
+      '..',
+      'resources',
+      folderName,
+    );
+    const filePath = path.join(
+      folderPath,
+      fileName,
+    );
+    
+    await fs.promises.mkdir(folderPath, { recursive: true });
 
     const reshapedData = data.map(({ cliente_telefone, ...row }) => ({
       'Cliente Nome': row['cliente_nome'],
@@ -109,8 +120,8 @@ export class ClientesService {
       { width: 20 },
     ];
     xlsx.utils.book_append_sheet(workbook, worksheet, 'vendas');
-    xlsx.writeFile(workbook, `src/resources${filePath}`);
+    xlsx.writeFile(workbook, filePath);
 
-    return { resultado: filePath, mensagem: 'Ok excel gerado' };
+    return { resultado: `/${folderName}/${fileName}`, mensagem: 'Ok excel gerado' };
   }
 }
