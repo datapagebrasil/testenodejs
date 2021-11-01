@@ -75,4 +75,4 @@ Equipe Datapage
 
 ## Entrega
 
-Para iniciar o teste, faça o clone, depois crie uma branch com o seu nome completo e depois envie-nos o pull request. Caso não seja possível, suba o projeto em seu próprio github e nos envie o link.
+Para iniciar o teste, faça o clone, suba o projeto em seu próprio github e nos envie o link.
