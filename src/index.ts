@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import { AddressInfo } from 'net';
 import cors from 'cors'
+import { customerRoutes } from './routes/customerRoutes';
 
 dotenv.config();
 
@@ -21,3 +22,5 @@ export const server = app.listen(process.env.PORT || 3003, () => {
 app.get("/", (req: Request, res: Response) => {
     res.status(200).send("Hello World")
 })
+
+app.use("/cliente", customerRoutes)
