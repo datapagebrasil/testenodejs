@@ -1,5 +1,6 @@
 import express from 'express'
+import customerController from '../controller/CustomerController'
 
 export const customerRoutes = express.Router()
 
-customerRoutes.get("/:customerId/gerar-vendas", /*aqui deve chamar a camada de controller*/)
+customerRoutes.get("/:customerId/gerar-vendas", customerController.getSalesByCustomerId)
