@@ -1,4 +1,4 @@
-import { requestResult } from '../model/CustomerModel'
+import { requestResult, REQUEST_RESULT_KEYS } from '../model/CustomerModel'
 
 export default class CustomError extends Error {
     constructor(
@@ -13,9 +13,9 @@ export default class CustomError extends Error {
 
     public mountError() {
         const errorBody: requestResult = {
-            "mensagem": this.message,
-            "erro": this.quantityError,
-            "dados": this.data
+            [REQUEST_RESULT_KEYS.MESSAGE]: this.message,
+            [REQUEST_RESULT_KEYS.ERROR]: this.quantityError,
+            [REQUEST_RESULT_KEYS.DATA]: this.data
         }
         return {
             code: this.httpStatusCode,

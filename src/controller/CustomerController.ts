@@ -14,11 +14,11 @@ export class CustomerController {
         req: Request, res: Response
     ): Promise<any> {
 
-        //fazer validação e sanitização do input
+        //to do: input parameter validation 
 
         try {
 
-            const salesByCustomerId = await this.customerBusiness
+            const salesByCustomerId = await customerBusiness
                 .getSalesByCustomerId(Number(req.params.customerId))
 
             return res

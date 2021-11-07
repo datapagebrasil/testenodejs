@@ -1,5 +1,5 @@
-import { requestResult } from "../model/CustomerModel";
+import { requestResult, salesData, salesItens } from "../model/CustomerModel";
 
 export default interface CustomerRepository {
-    getSalesByCustomerId(customerId: number): Promise<requestResult>
+    getSalesByCustomerId(customerId: number): Promise<Array<salesData & salesItens>> | null
 }
