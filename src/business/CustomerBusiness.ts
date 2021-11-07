@@ -1,5 +1,6 @@
+import moment from 'moment';
 import CustomError from '../error/CustomError';
-import { newCustomerDTO, requestResult, REQUEST_RESULT_KEYS, RESULT_DATA_ITEM_KEYS, RESULT_DATA_KEYS, salesData, salesItens } from '../model/CustomerModel';
+import { newCustomerDTO, NEW_CUSTOMER_DTO, requestResult, resultNewCustomerData, RESULT_DATA_ITEM_KEYS, RESULT_DATA_KEYS, RESULT_NEW_CUSTOMER, salesData, salesItens } from '../model/CustomerModel';
 import CustomerRepository from './CustomerRepository';
 
 export default class CustomerBusiness {
@@ -78,9 +79,34 @@ export default class CustomerBusiness {
     }
 
 
-    postNewCustomer(newCustomerDTO: newCustomerDTO): Promise<requestResult> {
-      
+
+    public async postNewCustomer(newCustomerDTO: newCustomerDTO): Promise<requestResult> {
+
         try {
+
+            if (!Object.keys(newCustomerDTO)) {
+                throw new CustomError(
+                    400,
+                    "Informações ausentes",
+                    1,
+                    `Necessário informar '${NEW_CUSTOMER_DTO.NAME}', '${NEW_CUSTOMER_DTO.PHONE}' e '${NEW_CUSTOMER_DTO.CPF}'`)
+                    .mountError()
+            }
+
+            //to do: advanced DTO validation / http status 406
+
+            newCustomerDTO[NEW_CUSTOMER_DTO.CREATE_AT] = moment(new Date()).format("YYYY-MM-DD HH:MM:SS.000000")
+
+            const newCustomerRegister = await this.customerDatabase.postNewCustomer(newCustomerDTO)
+
+            const newUserInfo: resultNewCustomerData = {
+                [RESULT_NEW_CUSTOMER.ID]: newCustomerRegister,
+                [RESULT_NEW_CUSTOMER.NAME]: newCustomerDTO[NEW_CUSTOMER_DTO.NAME]
+            }
+
+            const result: requestResult = requestResult.toSuccessfullyNewCustomerRes(newUserInfo)
+
+            return result
 
         } catch (error) {
 

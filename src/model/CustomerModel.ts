@@ -8,11 +8,19 @@ export class requestResult {
 
     public [REQUEST_RESULT_KEYS.MESSAGE]: string
     public [REQUEST_RESULT_KEYS.ERROR]: number
-    public [REQUEST_RESULT_KEYS.DATA]: Array<salesData | resultNewCustomerData| null>
+    public [REQUEST_RESULT_KEYS.DATA]: Array<salesData | null> | resultNewCustomerData
 
     static toSuccessfullyOutput(data: (salesData | null)[]) {
         return {
             [REQUEST_RESULT_KEYS.MESSAGE]: "Vendas carregadas do cliente",
+            [REQUEST_RESULT_KEYS.ERROR]: 0,
+            [REQUEST_RESULT_KEYS.DATA]: data
+        }
+    }
+
+    static toSuccessfullyNewCustomerRes(data: resultNewCustomerData) {
+        return {
+            [REQUEST_RESULT_KEYS.MESSAGE]: "Cliente inserido com sucesso",
             [REQUEST_RESULT_KEYS.ERROR]: 0,
             [REQUEST_RESULT_KEYS.DATA]: data
         }
@@ -63,7 +71,7 @@ export enum NEW_CUSTOMER_DTO {
 export interface newCustomerDTO {
     [NEW_CUSTOMER_DTO.NAME]: string,
     [NEW_CUSTOMER_DTO.PHONE]: string,
-    [NEW_CUSTOMER_DTO.CPF]: number,
+    [NEW_CUSTOMER_DTO.CPF]: string,
     [NEW_CUSTOMER_DTO.CREATE_AT]?: string
 }
 

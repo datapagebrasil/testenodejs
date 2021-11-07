@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import CustomerBusiness from "../business/CustomerBusiness";
 import SQLCustomerDatabase from "../data/SQLCustomerDatabase";
+import CustomError from "../error/CustomError";
+import { newCustomerDTO, NEW_CUSTOMER_DTO } from "../model/CustomerModel";
 
 
 export class CustomerController {
@@ -35,15 +37,35 @@ export class CustomerController {
     }
 
 
-    
+
     public async postNewCustomer(
         req: Request, res: Response
     ): Promise<any> {
-       
-        //to do: input params validation 
-
 
         try {
+    
+            if (!Object.keys(req.body).length) {
+                throw new CustomError(
+                    400,
+                    "Informações ausentes",
+                    1,
+                    `Necessário informar '${NEW_CUSTOMER_DTO.NAME}', '${NEW_CUSTOMER_DTO.PHONE}' e '${NEW_CUSTOMER_DTO.CPF}'`)
+                    .mountError()
+            }
+
+            const newCustomerDTO: newCustomerDTO = {
+                [NEW_CUSTOMER_DTO.NAME]: req.body[NEW_CUSTOMER_DTO.NAME],
+                [NEW_CUSTOMER_DTO.PHONE]: req.body[NEW_CUSTOMER_DTO.PHONE],
+                [NEW_CUSTOMER_DTO.CPF]: req.body[NEW_CUSTOMER_DTO.CPF]
+            }
+            
+            const newCustomerInfo = await customerBusiness
+                .postNewCustomer(newCustomerDTO)
+
+            return res
+                .status(201)
+                .send(newCustomerInfo)
+                .end()
 
         } catch (error: any) {
             res

@@ -60,6 +60,13 @@ export default class SQLCustomerDatabase extends SQLBaseDatabase implements Cust
 
         try {        
 
+            const query = await this.getConnection()
+            .from(SQL_TABLES.CUSTOMER)
+            .insert(newCustomerDTO)
+            .returning("id")
+
+            return query[0]
+
         } catch (error) {
             console.log(error)
             throw new CustomError(500, "Internal Error", 1, "Something went wrong").mountError()
