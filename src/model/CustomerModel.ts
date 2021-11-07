@@ -8,7 +8,7 @@ export class requestResult {
 
     public [REQUEST_RESULT_KEYS.MESSAGE]: string
     public [REQUEST_RESULT_KEYS.ERROR]: number
-    public [REQUEST_RESULT_KEYS.DATA]: Array<salesData | null>
+    public [REQUEST_RESULT_KEYS.DATA]: Array<salesData | resultNewCustomerData| null>
 
     static toSuccessfullyOutput(data: (salesData | null)[]) {
         return {
@@ -50,4 +50,30 @@ export interface salesItens {
     [RESULT_DATA_ITEM_KEYS.NAME]: string,
     [RESULT_DATA_ITEM_KEYS.VALUE]: number,
     [RESULT_DATA_ITEM_KEYS.QUANTITY]: number
+}
+
+
+export enum NEW_CUSTOMER_DTO {
+    NAME = "nome",
+    PHONE = "telefone",
+    CPF = "cpf",
+    CREATE_AT = "data_cadastro",
+}
+
+export interface newCustomerDTO {
+    [NEW_CUSTOMER_DTO.NAME]: string,
+    [NEW_CUSTOMER_DTO.PHONE]: string,
+    [NEW_CUSTOMER_DTO.CPF]: number,
+    [NEW_CUSTOMER_DTO.CREATE_AT]?: string
+}
+
+
+export enum RESULT_NEW_CUSTOMER {
+    NAME = "nome",
+    ID = "id"
+}
+
+export interface resultNewCustomerData {
+    [RESULT_NEW_CUSTOMER.NAME]: string,
+    [RESULT_NEW_CUSTOMER.ID]: number
 }

@@ -1,5 +1,5 @@
 import CustomError from '../error/CustomError';
-import { requestResult, REQUEST_RESULT_KEYS, RESULT_DATA_ITEM_KEYS, RESULT_DATA_KEYS, salesData, salesItens } from '../model/CustomerModel';
+import { newCustomerDTO, requestResult, REQUEST_RESULT_KEYS, RESULT_DATA_ITEM_KEYS, RESULT_DATA_KEYS, salesData, salesItens } from '../model/CustomerModel';
 import CustomerRepository from './CustomerRepository';
 
 export default class CustomerBusiness {
@@ -69,9 +69,25 @@ export default class CustomerBusiness {
             return result
 
         } catch (error) {
+
+            //to do: error treatment
+
             throw error
         }
 
+    }
+
+
+    postNewCustomer(newCustomerDTO: newCustomerDTO): Promise<requestResult> {
+      
+        try {
+
+        } catch (error) {
+
+            //to do: error treatment
+
+            throw error
+        }
     }
 
 

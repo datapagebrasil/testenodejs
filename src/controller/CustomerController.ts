@@ -14,7 +14,7 @@ export class CustomerController {
         req: Request, res: Response
     ): Promise<any> {
 
-        //to do: input parameter validation 
+        //to do: input params validation 
 
         try {
 
@@ -25,6 +25,25 @@ export class CustomerController {
                 .status(200)
                 .send(salesByCustomerId)
                 .end()
+
+        } catch (error: any) {
+            res
+                .status(error.code || 500)
+                .send(error.message || "Internal Error")
+                .end()
+        }
+    }
+
+
+    
+    public async postNewCustomer(
+        req: Request, res: Response
+    ): Promise<any> {
+       
+        //to do: input params validation 
+
+
+        try {
 
         } catch (error: any) {
             res

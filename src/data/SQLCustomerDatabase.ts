@@ -1,6 +1,6 @@
 import CustomerRepository from '../business/CustomerRepository';
 import CustomError from '../error/CustomError';
-import { RESULT_DATA_ITEM_KEYS, RESULT_DATA_KEYS, salesData, salesItens } from '../model/CustomerModel';
+import { newCustomerDTO, RESULT_DATA_ITEM_KEYS, RESULT_DATA_KEYS, salesData, salesItens } from '../model/CustomerModel';
 import { SQL_TABLES, SQL_TABLE_CUSTOMER, SQL_TABLE_SALES, SQL_TABLE_SOLD_ITEMS } from '../model/SQLDatabaseModel';
 import { SQLBaseDatabase } from './SQLBaseDatabase';
 
@@ -53,5 +53,18 @@ export default class SQLCustomerDatabase extends SQLBaseDatabase implements Cust
 
     }
 
+
+    public async postNewCustomer(
+        newCustomerDTO: newCustomerDTO
+    ): Promise<any> {
+
+        try {        
+
+        } catch (error) {
+            console.log(error)
+            throw new CustomError(500, "Internal Error", 1, "Something went wrong").mountError()
+        }
+
+    }
 
 }
