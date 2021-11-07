@@ -1,6 +1,6 @@
 # Atividade 4
 
-- [ ] Fazer a rota POST /cliente/  salvar os dados de um cliente com os campos(nome,telefone,cpf) da tabela (cliente).
+- [x] Fazer a rota POST /cliente/  salvar os dados de um cliente com os campos(nome,telefone,cpf) da tabela (cliente).
 E retornar qual foi o ID inserido.
 
 ```
@@ -28,7 +28,7 @@ E retornar qual foi o ID inserido.
 
 (Evidências no evidencia.doc)
 
-- [ ] - Criação do Cliente : nome Renata / Cpf 123.123.123-12 /  Telefone (62) 98112-1233
+- [x] - Criação do Cliente : nome Renata / Cpf 123.123.123-12 /  Telefone (62) 98112-1233
 - [ ] - Exception enviando um cpf com 111.123.123
 
 ---

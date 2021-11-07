@@ -1,5 +1,31 @@
 # Teste datapage Node JS
 
+### Danilo Anthony Chagas
+
+### Nota: entrega parcial para acompanhamento
+
+### Tasks
+- [x] Task 1 - subir BD com docker e realizar uma consulta no BD
+- [x] Task 2 - descrever extensões VSCode
+- [x] Task 3 - consultar compras de um cliente por ID
+- [x] Task 4 - Parcial/ Cadastrar um novo cliente
+
+### Instruções para iniciar projeto localmente
+via terminal, na pasta raiz do projeto:
+<code>npm install</code>
+<code>sudo docker-compose up -d</code>
+<code>npm run dev-start</code>
+
+`consumir com Rest API Client da sua prefêrencia`
+
+[Documentação (em desenvolvimento)](https://documenter.getpostman.com/view/16227218/UVC3kTne)
+</br>
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/16227218-55c0675a-661a-4cda-aabb-b8dbb4740c1e?action=collection%2Ffork&collection-url=entityId%3D16227218-55c0675a-661a-4cda-aabb-b8dbb4740c1e%26entityType%3Dcollection%26workspaceId%3D68ac0672-2bf2-40f8-a03e-c77bc6f362eb)
+
+<details>
+<summary>Enunciado do Projeto</summary>
+# Teste datapage Node JS
+
 Olá caro desenvolvedor, nesse teste analisaremos seu conhecimento geral e inclusive velocidade de desenvolvimento. Abaixo explicaremos tudo o que será necessário.
 
 ## Instruções
@@ -76,3 +102,4 @@ Equipe Datapage
 ## Entrega
 
 Para iniciar o teste, faça o clone, suba o projeto em seu próprio github e nos envie o link.
+</details>
